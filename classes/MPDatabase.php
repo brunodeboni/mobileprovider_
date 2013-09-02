@@ -1,0 +1,37 @@
+<?php
+
+class MPDatabase {
+    
+    private static $dbgeral;
+    //private static $subdomain;
+
+    public static function db() {
+        if(!self::$dbgeral) {
+			self::$dbgeral = new PDO(
+						'mysql:host=mysql.centralsigma.com.br;dbname=mobile_provider;charset=utf8', 
+						'webadmin', 'webADMIN', 
+						array(
+							//PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+							PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ
+						)
+				);
+			self::$dbgeral->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }
+		
+		return self::$dbgeral;
+		
+        /*
+        if($subdomain === NULL) {
+            // retorna banco geral
+            return self::$dbgeral;
+        }else {
+            //retorna nome do banco do subdomínio passado por parâmetro
+            $qry_subdomain = self::$dbgeral->prepare('select * from subdominios where subdominio = :subdomain');
+            $qry_subdomain->execute(array(':subdomain' => $subdomain));
+            
+            return self::$subdomain = $qry_subdomain->fetch();
+        }
+		*/
+    }
+}
+
